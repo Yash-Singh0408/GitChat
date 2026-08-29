@@ -42,6 +42,28 @@ export type IndexStatusResponse = {
   errorMessage: string | null;
 };
 
+export type ChatSession = {
+  id: string;
+  repositoryId: string;
+  title: string;
+  createdAt: string;
+};
+
+export type Citation = {
+  filePath: string;
+  startLine: number | null;
+  endLine: number | null;
+  language: string | null;
+};
+
+export type ChatMessage = {
+  id: string;
+  role: "USER" | "ASSISTANT";
+  content: string;
+  citations: Citation[];
+  createdAt: string;
+};
+
 export class ApiError extends Error {
     status: number;
 
@@ -113,4 +135,21 @@ export const api = {
       method:"POST"
     }),
     indexStatus:(id:string)=>apiFetch<IndexStatusResponse>(`/api/repos/${id}/status`),
+
+    // create Chat
+    createSession: (repositoryId: string, title?: string) =>
+    apiFetch<ChatSession>("/api/chat/sessions", {
+      method: "POST",
+      body: JSON.stringify({ repositoryId, title }),
+    }),
+
+    //listSessions
+  listSessions: (repositoryId: string) =>
+    apiFetch<ChatSession[]>(
+      `/api/chat/sessions?repositoryId=${encodeURIComponent(repositoryId)}`
+    ),
+
+    // getMessages
+  getMessages: (sessionId: string) =>
+    apiFetch<ChatMessage[]>(`/api/chat/sessions/${sessionId}`),
 };

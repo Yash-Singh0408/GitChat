@@ -36,6 +36,7 @@ export function useRepos() {
 // },
 
     queryFn: () => api.listRepos(true),
+    
     staleTime: 30_000,
     refetchInterval: (query) =>
       hasIndexingRepos(query.state.data) ? INDEXING_POLL_MS : false,

@@ -69,7 +69,7 @@ public class RepoService {
 
         String currentUserLogin = user.getGithubUsername();
 
-        
+
         return saved.stream()
                 .sorted(compareRepos(currentUserLogin))
                 .map(this::toResponse)

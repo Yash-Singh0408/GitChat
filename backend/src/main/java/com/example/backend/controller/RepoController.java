@@ -2,9 +2,13 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.IndexStatusResponse;
 import com.example.backend.dto.RepositoryResponse;
+import com.example.backend.entity.Repository;
 import com.example.backend.security.CurrentUser;
 import com.example.backend.services.RepoService;
+import com.example.backend.services.indexing.IndexingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +21,7 @@ public class RepoController {
 
     private final CurrentUser currentUser;
     private final RepoService repoService;
+    private final IndexingService indexingService;
 
     @GetMapping
     public List<RepositoryResponse> list(@RequestParam(name = "refresh", defaultValue = "true")boolean refresh){
@@ -39,4 +44,11 @@ public class RepoController {
         return repoService.status(id,userId);
     }
 
+    @PostMapping("/{id}/index")
+    public ResponseEntity<RepositoryResponse> index(@PathVariable UUID id){
+        UUID userId = currentUser.require().getId();
+        Repository repo = indexingService.startIndexing(id,userId);
+        indexingService.indexAsync(id,userId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(repoService.toResponse(repo));
+    }
 }

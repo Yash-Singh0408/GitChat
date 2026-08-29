@@ -68,16 +68,19 @@ export function AppShell({
               <SidebarMenuButton
                 size="lg"
                 render={<Link href="/dashboard" />}
-                tooltip="DevPilot"
+                tooltip="GitChat"
               >
                 <DevPilotIcon className="size-8 rounded-[10px]" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">DevPilot</span>
+                  <span className="truncate font-semibold">GitChat</span>
                   <span className="truncate text-xs text-muted-foreground">
                     Chat with your code
                   </span>
                 </div>
               </SidebarMenuButton>
+              {/* <SidebarMenuButton size="lg" render={<Link href="/dashboard" />}>
+                <BrandMark className="w-full justify-start" />
+              </SidebarMenuButton>   */}
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
@@ -180,9 +183,9 @@ export function AppShell({
 
       <SidebarInset>
         {!hideHeader && (
-          <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
+          <header className="sticky top-0 z-20 flex shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
+            {/* <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" /> */}
             <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
               <div className="min-w-0">
                 {title && (
@@ -198,7 +201,7 @@ export function AppShell({
               </div>
               <div className="flex items-center gap-2">
                 {actions}
-                <ModeToggle />
+                {/* <ModeToggle /> */}
               </div>
             </div>
           </header>
@@ -218,7 +221,7 @@ export function BrandMark({ className }: { className?: string }) {
       )}
     >
       <DevPilotIcon className="size-8 rounded-[10px]" />
-      <span className="font-heading text-[1.05rem] leading-none">DevPilot</span>
+      <span className="font-heading text-[1.05rem] leading-none">GitChat</span>
     </div>
   );
 }

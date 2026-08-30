@@ -24,28 +24,28 @@ Ask questions about code, understand architecture, trace logic — all in natura
 <!-- SCREENSHOT: Landing / Hero Page -->
 > **Hero / Landing Page**
 >
-> ![Landing Page](image-4.png)
+> ![Landing Page](/images/image-4.png)
 
 ---
 
 <!-- SCREENSHOT: Dashboard — Repository list with index status badges -->
 > **Dashboard — Repository List**
 >
-> ![Dashboard](image-5.png)
+> ![Dashboard](/images/image-5.png)
 
 ---
 
 <!-- SCREENSHOT: Repository Detail — 3D file tree + index progress -->
 > **Repository View — 2D/3D File Tree**
 >
-> ![Repo View](image-6.png)
+> ![Repo View](/images/image-6.png)
 
 ---
 
 <!-- SCREENSHOT: Chat interface with streamed response and citations -->
 > **Chat Interface - Streaming Response with Code Citations**
 
-> ![Chat Interface](image-7.png)
+> ![Chat Interface](/images/image-7.png)
 
 <!-- SCREENSHOT: Chat interface with streaming response and citations --> 
 >**Chat Interface - Indexing/Chunking**

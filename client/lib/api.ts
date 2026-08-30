@@ -64,6 +64,12 @@ export type ChatMessage = {
   createdAt: string;
 };
 
+export type TreeNode = {
+  name: string;
+  type: "FILE" | "DIRECTORY";
+  children?: TreeNode[];
+};
+
 export class ApiError extends Error {
     status: number;
 
@@ -135,6 +141,10 @@ export const api = {
       method:"POST"
     }),
     indexStatus:(id:string)=>apiFetch<IndexStatusResponse>(`/api/repos/${id}/status`),
+
+    // Repository Tree
+    getRepositoryTree: (id: string) =>
+      apiFetch<TreeNode>(`/api/repos/${id}/tree`),
 
     // create Chat
     createSession: (repositoryId: string, title?: string) =>

@@ -3,11 +3,13 @@ package com.example.backend.services;
 
 import com.example.backend.dto.IndexStatusResponse;
 import com.example.backend.dto.RepositoryResponse;
+import com.example.backend.dto.TreeNodeDto;
 import com.example.backend.entity.Repository;
 import com.example.backend.entity.User;
 import com.example.backend.exceptions.NotFoundException;
 import com.example.backend.repository.RepositoryRepository;
 import com.example.backend.services.github.GithubApiClient;
+import com.example.backend.services.utils.TreeBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +106,28 @@ public class RepoService {
                 repo.getChunkCount(),
                 repo.getIndexedAt(),
                 repo.getErrorMessage());
+    }
+
+    @Transactional(readOnly = true) // get repository tree structure
+    public TreeNodeDto getRepositoryTree(UUID repoId, UUID userId) {
+        Repository repo = requireOwned(repoId, userId);
+        User user = userService.requiredById(userId);
+        String token = userService.decryptAccessToken(user);
+
+        Map<String, Object> treeResponse = gitHubApiClient.getRepoTree(token, repo.getOwner(), repo.getName(), repo.getDefaultBranch());
+
+        if (treeResponse == null) {
+            return TreeNodeDto.builder()
+                    .name(repo.getName())
+                    .type(TreeNodeDto.TreeNodeType.DIRECTORY)
+                    .children(new ArrayList<>())
+                    .build();
+        }
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> treeItems = (List<Map<String, Object>>) treeResponse.get("tree");
+
+        return TreeBuilder.buildTree(treeItems, repo.getName());
     }
 
     public RepositoryResponse toResponse(Repository repo) {

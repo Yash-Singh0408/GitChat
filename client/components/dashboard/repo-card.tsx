@@ -9,6 +9,7 @@ import {
   MessageSquare,
   RotateCcw,
   Sparkles,
+  FolderOpen,
 } from "lucide-react";
 
 import { IndexErrorAlert } from "@/components/dashboard/index-error-alert";
@@ -31,6 +32,10 @@ export function RepoCard({ repo }: { repo: Repository }) {
 
   function openChat() {
     router.push(`/chat/${repo.id}`);
+  }
+
+  function openTree() {
+    router.push(`/dashboard/tree/${repo.id}`);
   }
 
   function handlePrimary() {
@@ -148,6 +153,10 @@ export function RepoCard({ repo }: { repo: Repository }) {
               Chat
             </Button>
           )}
+          <Button variant="outline" size="sm" onClick={openTree}>
+            <FolderOpen data-icon="inline-start" />
+            Tree
+          </Button>
           <Button
             size="sm"
             variant={isFailed ? "outline" : "default"}

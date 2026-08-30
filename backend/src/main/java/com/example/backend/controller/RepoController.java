@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.IndexStatusResponse;
 import com.example.backend.dto.RepositoryResponse;
+import com.example.backend.dto.TreeNodeDto;
 import com.example.backend.entity.Repository;
 import com.example.backend.security.CurrentUser;
 import com.example.backend.services.RepoService;
@@ -42,6 +43,12 @@ public class RepoController {
     public IndexStatusResponse status(@PathVariable UUID id){
         UUID userId = currentUser.require().getId();
         return repoService.status(id,userId);
+    }
+
+    @GetMapping("/{id}/tree")
+    public TreeNodeDto tree(@PathVariable UUID id){
+        UUID userId = currentUser.require().getId();
+        return repoService.getRepositoryTree(id, userId);
     }
 
     @PostMapping("/{id}/index")

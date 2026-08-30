@@ -36,6 +36,7 @@ export function ChatView({ repoId }: { repoId: string }) {
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(
     null
   );
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const autoCreateRef = useRef(false);
 
   const sessionId =
@@ -105,13 +106,23 @@ export function ChatView({ repoId }: { repoId: string }) {
           : "Waiting for indexing to finish"
       }
       actions={
-        <Button variant="outline" size="sm" render={<Link href="/dashboard" />}>
-          <ArrowLeft data-icon="inline-start" />
-          Repos
-        </Button>
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setSidebarCollapsed((value) => !value)}
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? "Expand" : "Collapse"}
+          </Button>
+          <Button variant="outline" size="sm" render={<Link href="/dashboard" />}>
+            <ArrowLeft data-icon="inline-start" />
+            Repos
+          </Button>
+        </>
       }
     >
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:h-[calc(100vh-4.5rem)] md:flex-row md:gap-0">
         <ChatSidebar
           repo={{
             ...repo,
@@ -124,9 +135,11 @@ export function ChatView({ repoId }: { repoId: string }) {
           }}
           sessionId={sessionId}
           onSelectSession={setSelectedSessionId}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed((value) => !value)}
         />
 
-        <section className="flex min-h-[70vh] min-w-0 flex-1 flex-col">
+        <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background/70">
           {!ready ? (
             <IndexingState repo={repo} status={statusQuery.data} />
           ) : (
@@ -135,6 +148,7 @@ export function ChatView({ repoId }: { repoId: string }) {
                 repo={repo}
                 messages={messagesQuery.data ?? []}
                 streamText={streamText}
+                streaming={streaming}
                 isLoading={messagesQuery.isLoading}
               />
               <ChatComposer

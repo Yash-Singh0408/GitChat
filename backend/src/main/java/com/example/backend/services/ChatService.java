@@ -67,7 +67,8 @@ public class ChatService {
     public List<ChatMessageResponse> getMessages(UUID userId, UUID sessionId) {
         ChatSession session = requireSession(userId, sessionId);
 
-        return chatMessageRepository.findBySessionIdOrderByCreatedAtDesc(session.getId()).stream()
+        return chatMessageRepository.findBySessionIdOrderByCreatedAtAsc(session.getId())
+                .stream()
                 .map(this::toMessageResponse)
                 .toList();
     }

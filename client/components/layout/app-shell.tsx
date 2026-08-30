@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, Settings } from "lucide-react";
-
-import { DevPilotIcon } from "@/components/icons/devpilot-icon";
-
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { GitBranch, LogOut, Settings } from "lucide-react";
 import { useCurrentUser, useLogout } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,7 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -33,7 +28,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   dashboardNavGroups,
@@ -70,7 +64,9 @@ export function AppShell({
                 render={<Link href="/dashboard" />}
                 tooltip="GitChat"
               >
-                <DevPilotIcon className="size-8 rounded-[10px]" />
+                <span className="flex size-8 items-center justify-center rounded-[10px] bg-muted text-foreground">
+                  <GitBranch className="size-4" />
+                </span>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">GitChat</span>
                   <span className="truncate text-xs text-muted-foreground">
@@ -220,7 +216,9 @@ export function BrandMark({ className }: { className?: string }) {
         className
       )}
     >
-      <DevPilotIcon className="size-8 rounded-[10px]" />
+      <span className="flex size-8 items-center justify-center rounded-[10px] bg-muted text-foreground">
+        <GitBranch className="size-4" />
+      </span>
       <span className="font-heading text-[1.05rem] leading-none">GitChat</span>
     </div>
   );

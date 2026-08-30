@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRefreshRepos, useRepos } from "@/hooks/use-repos";
-import type { IndexStatus } from "@/lib/api";
+import type { IndexStatus, Repository } from "@/lib/api";
 
 type FilterStatus = "ALL" | IndexStatus;
 
@@ -28,8 +28,8 @@ export function RepoDashboard() {
     "all"
   );
 
-  const filtered = useMemo(() => {
-    const list = reposQuery.data ?? [];
+  const filtered = useMemo<Repository[]>(() => {
+    const list: Repository[] = reposQuery.data ?? [];
     const q = search.trim().toLowerCase();
 
     return list.filter((repo) => {

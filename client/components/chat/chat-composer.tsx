@@ -29,15 +29,15 @@ export function ChatComposer({
   }
 
   return (
-    <div className="border-t bg-background/80 p-4 backdrop-blur">
-      <div className="mx-auto max-w-3xl space-y-2">
-        <div className="flex items-end gap-2 rounded-2xl border bg-card p-2 shadow-xs">
+    <div className="border-t bg-background/80 p-4 backdrop-blur-sm md:p-5">
+      <div className="mx-auto max-w-4xl space-y-2.5">
+        <div className="flex items-end gap-2 rounded-2xl border bg-card p-2.5 shadow-xs md:p-3">
           <Textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Ask about architecture, files, flows…"
             disabled={disabled}
-            className="min-h-12 flex-1 border-0 bg-transparent px-3 py-2 shadow-none focus-visible:ring-0"
+            className="min-h-[52px] flex-1 border-0 bg-transparent px-3 py-2.5 shadow-none focus-visible:ring-0"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
